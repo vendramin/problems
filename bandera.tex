@@ -1,0 +1,166 @@
+\documentclass[11pt]{amsproc}
+
+\usepackage[a4paper,margin=2.6cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\gen}[1]{\langle #1\rangle}
+\newcommand{\col}{\operatorname{col}}
+
+\begin{document}
+
+\section*{Problema}
+
+Pintamos cada una de las $n$ coordenadas de $\C^n$ con uno de $l$ colores. Un vector
+no nulo se llama \emph{monocromático} si todas sus coordenadas no nulas son del mismo
+color, y ése es entonces \emph{su} color; por ejemplo, los vectores de la base
+canónica son monocromáticos.
+
+Fijemos también una base cualquiera $c_1,\dots,c_n$ de $\C^n$ y escribamos
+\[
+  U_t=\gen{c_1,\dots,c_t},\qquad 0\le t\le n,
+\]
+de modo que $\{0\}=U_0\subset U_1\subset\cdots\subset U_n=\C^n$ y $\dim U_t=t$.
+
+\begin{enumerate}
+  \item\itshape Probar que toda base $x_1,\dots,x_n$ de $\C^n$ se puede reordenar de
+        manera que los últimos $n-t$ vectores completen $U_t$:
+        \[
+          \C^n=U_t\oplus\gen{x_{t+1},\dots,x_n}\qquad\text{para todo } 0\le t\le n .
+        \]
+        Un único reordenamiento debe servir para los $n+1$ valores de $t$ a la vez.
+  \item\itshape Probar que existe una base $x_1,\dots,x_n$ de $\C^n$ formada por
+        vectores monocromáticos tal que, para cada $i$, sumándole a $x_i$ una
+        combinación lineal de vectores $x_j$ con $j>i$ \emph{de color distinto al de
+        $x_i$} se llega a un vector de $U_i$.
+\end{enumerate}
+ 
+Dicho de otro modo: en (2) cada $x_i$ alcanza el subespacio $U_i$ con la ayuda de los
+vectores que vienen después, pero nunca con la ayuda de los de su propio color.
+
+\section*{Solución}
+
+\subsection*{Parte (1)}
+
+Elegimos los vectores de atrás para adelante. Escribamos
+\[
+  T_t=\gen{x_{\sigma(t+1)},\dots,x_{\sigma(n)}}
+\]
+para los índices ya elegidos y
+probemos, por inducción decreciente en $t$, que se los puede elegir de modo que
+$\C^n=U_t\oplus T_t$.
+
+Para $t=n$ tomamos $T_n=\{0\}$: no hay nada que hacer, pues $U_n=\C^n$.
+
+Supongamos elegidos índices distintos $\sigma(t+1),\dots,\sigma(n)$ con
+$\C^n=U_t\oplus T_t$; en particular $\dim T_t=n-t$. Como $U_{t-1}\subseteq U_t$ y
+$U_t\cap T_t=\{0\}$, la suma $U_{t-1}+T_t$ es directa y
+\[
+  H:=U_{t-1}\oplus T_t\quad\text{tiene dimensión}\quad (t-1)+(n-t)=n-1,
+\]
+es decir, $H$ es un hiperplano. Los $x_1,\dots,x_n$ generan $\C^n\neq H$, así que
+algún $x_i$ no pertenece a $H$. Ese índice $i$ es automáticamente uno de los que
+todavía están libres: si fuera uno de los ya elegidos tendríamos
+$x_i\in T_t\subseteq H$. Ponemos $\sigma(t):=i$ y obtenemos
+\[
+  \C^n=H\oplus\gen{x_{\sigma(t)}}=U_{t-1}\oplus\bigl(T_t\oplus\gen{x_{\sigma(t)}}\bigr)
+  =U_{t-1}\oplus T_{t-1},
+\]
+como queríamos. Al cabo de $n$ pasos elegimos $n$ índices distintos, o sea un
+reordenamiento, válido simultáneamente para todos los $t$.
+
+\subsection*{Parte (2), paso 1}
+
+La base canónica $e_1,\dots,e_n$ es monocromática, y esa propiedad no se pierde al
+reordenar. Aplicando la primera parte a esa base obtenemos una base monocromática
+$x_1,\dots,x_n$ (una permutación de la canónica) tal que
+\begin{equation}\label{eq:compl}
+  \C^n=U_t\oplus\gen{x_{t+1},\dots,x_n}
+\end{equation}
+para todo $0\le t\le n$.
+
+\subsection*{Parte (2), paso 2}
+
+Fijemos $i$. Por \eqref{eq:compl} con $t=i$ podemos escribir $x_i=b_i-w$ con
+$b_i\in U_i$ y $w\in\gen{x_{i+1},\dots,x_n}$, o sea
+\begin{equation}\label{eq:tri}
+  b_i=x_i+\sum_{j>i}s_{ij}x_j\in U_i
+\end{equation}
+para ciertos escalares $s_{ij}\in\C$ (únicos, porque la suma en \eqref{eq:compl} es
+directa). Es decir: ya sabemos llegar a $U_i$ desde $x_i$ usando vectores
+posteriores. Lo único que falta es conseguir que ningún $x_j$ del color de
+$x_i$ intervenga.
+
+Los vectores $b_1,\dots,b_n$ no volverán a cambiar en lo que sigue: lo único que
+modificaremos es la base $(x_i)$, y por lo tanto los coeficientes $s_{ij}$.
+
+\subsection*{Parte (2), paso 3}
+
+Digamos que el índice $i$ es \emph{bueno} si en \eqref{eq:tri} todos los $j$ con
+$s_{ij}\neq 0$ corresponden a vectores $x_j$ de color distinto del de $x_i$. El
+índice $n$ es bueno, porque $b_n=x_n$ y no hay nada que corregir.
+
+Supongamos que los índices $i+1,\dots,n$ son buenos y arreglemos el índice $i$.
+Reemplazamos $x_i$ por
+\[
+  x_i'=x_i+\sum_{\substack{j>i\\ \col(x_j)=\col(x_i)}} s_{ij}\,x_j ,
+\]
+y dejamos $x_j'=x_j$ para $j\neq i$. Verifiquemos tres cosas.
+
+Todos los sumandos de $x_i'$ son
+monocromáticos del mismo color que $x_i$, luego su suma también lo es (sus
+coordenadas no nulas viven entre las coordenadas de ese color), y $x_i'\neq 0$ porque
+su coeficiente en $x_i$ es $1$. Además el cambio $(x_j)\mapsto(x_j')$ es triangular
+con unos en la diagonal, así que $(x_j')$ es una base.
+
+La igualdad
+$b_p=x_p+\sum_{j>p}s_{pj}x_j$ involucra únicamente vectores $x_j$ con $j\ge p>i$, y
+para esos índices $x_j'=x_j$: la fórmula no cambia.
+
+Despejando
+\[
+  x_i=x_i'-\sum_{j>i,\,\col(x_j)=\col(x_i)}s_{ij}x_j'
+\]
+y reemplazando en
+\eqref{eq:tri},
+\[
+  b_i=\Bigl(x_i'-\!\!\sum_{\substack{j>i\\ \col(x_j)=\col(x_i)}}\!\! s_{ij}x_j'\Bigr)
+      +\sum_{j>i}s_{ij}x_j'
+   \;=\; x_i'+\sum_{\substack{j>i\\ \col(x_j)\neq\col(x_i)}} s_{ij}\,x_j' \;\in\; U_i .
+\]
+
+Los índices $p<i$ pueden haber cambiado, pero siguen cumpliendo una relación de la
+forma $b_p=x_p'+\sum_{j>p}s_{pj}'x_j'$, es decir, se conserva \eqref{eq:tri}; y les
+llegará su turno. Recorriendo $i=n,n-1,\dots,1$ obtenemos una base monocromática con
+todos los índices buenos, que es exactamente lo pedido. 
+
+\section*{Observaciones}
+
+\begin{enumerate}
+  \item La primera parte es fácil y, sobre todo, funciona como sugerencia:
+    avisa que el orden de los $x_i$ es parte de lo que hay que construir, que
+    es justamente la entrada al problema. Y además muchos participantes pueden
+    tener algún punto. Si el problema no incluye este ítem, se vuelve bastante
+    más duro. Para la versión difícil basta con quedarse solamente con el
+    segundo ítem: no hay que cambiar nada. También puede dejarse solo el
+    segundo ítem y poner como sugerencia que conviene empezar por reordenar la
+    base canónica. 
+
+  \item Los vectores $b_1,\dots,b_t$ construidos en el paso 2 son una base de
+    $U_t$ para cada $t$ (son $t$ vectores independientes dentro de un espacio de
+    dimensión $t$). Así, el segundo ítem equivale a lo siguiente: \emph{dada una
+      bandera completa $U_1\subset\cdots\subset U_n$ y una descomposición
+      $\C^n=V(1)\oplus\cdots\oplus V(l)$, existen una base $(x_i)$ con cada $x_i$
+      en algún $V(k)$, una base $(b_i)$ con $U_t=\gen{b_1,\dots,b_t}$, y una
+      matriz $S=(s_{ij})$ triangular superior con unos en la diagonal y con
+      $s_{ij}=0$ toda vez que $x_i$ y $x_j$ estén en el mismo sumando, tales que
+    $b_i=\sum_j s_{ij}x_j$.} Pintar las coordenadas no es un caso particular:
+    eligiendo una base adaptada a la descomposición, todo $V(k)$ se convierte en
+    un subespacio de coordenadas. Sin la condición sobre los colores, esto es la
+    descomposición $LU$ de una matriz inversible después de permutar columnas.
+\end{enumerate}
+
+
+\end{document}

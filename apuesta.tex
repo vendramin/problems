@@ -1,0 +1,126 @@
+\documentclass[11pt]{amsproc}
+
+\usepackage[a4paper,margin=2.6cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\newtheorem*{problema}{Problema}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\ip}[2]{\langle #1,\, #2\rangle}
+
+\begin{document}
+
+\section*{Problema}
+
+Una casa de apuestas ofrece $n$ apuestas distintas sobre una carrera con $r$
+resultados posibles. Apostar un peso a la apuesta $j$ devuelve $m_{ij}$ pesos si
+ocurre el resultado $i$, donde todos los $m_{ij}$ son números enteros; un retorno
+negativo significa una pérdida de esa cantidad. Se permite arriesgar un monto entero
+$c_j$ en cada apuesta $j$, y un monto negativo significa tomar el lado de la casa en
+esa apuesta. Así, si ocurre el resultado $i$, la ganancia neta es
+\[
+  \sum_{j=1}^{n} m_{ij}\,c_j .
+\]
+
+Diremos que un vector de pesos reales $(b_1,\dots,b_r)\neq(0,\dots,0)$ es
+\emph{equilibrante} si, al ponderar los resultados con $b_1,\dots,b_r$, toda apuesta
+queda pareja:
+\[
+  \sum_{i=1}^{r} b_i\, m_{ij}=0
+  \qquad\text{para todo } j=1,\dots,n .
+\]
+
+\begin{problema}
+Supongamos que en todo vector equilibrante hay al menos dos pesos de signos
+opuestos. Probar que existen montos enteros $c_1,\dots,c_n$ que garantizan una
+ganancia estrictamente positiva, cualquiera sea el resultado de la carrera.
+\end{problema}
+
+\section*{Solución}
+
+Escribamos $M=(m_{ij})$ para la matriz $r\times n$ de retornos, de modo que un vector
+de montos $c\in\R^n$ produce el vector de ganancias $Mc\in\R^r$. Sea
+\[
+  V=\{\,Mc\ :\ c\in\R^n\,\}\subseteq\R^r
+\]
+el espacio columna de $M$. Como $b^{\mathsf T}M=0$ vale exactamente cuando $b$ es
+ortogonal a $Mc$ para todo $c$, los vectores equilibrantes son precisamente los
+elementos no nulos de $V^{\perp}$.
+
+La hipótesis se reformula entonces así:
+\begin{equation}\label{eq:hyp}
+  \text{si } b\in V^{\perp},\ b\neq 0, \text{ entonces } b \text{ tiene alguna coordenada negativa.}
+\end{equation}
+En efecto, un $b\in V^\perp$ no nulo con todas sus coordenadas $\ge 0$ sería un
+vector equilibrante sin dos pesos de signos opuestos.
+
+Hay que producir $c\in\Z^n$ con todas las coordenadas de $Mc$ estrictamente
+positivas. Primero encontramos un tal $c$ en $\R^n$, y después arreglamos la
+integralidad sin costo alguno.
+
+\subsection*{Paso 1}
+
+Sean $e_1,\dots,e_r$ la base canónica de $\R^r$ y sea $P\colon\R^r\to\R^r$ la
+proyección ortogonal sobre $V$; recordemos que $P=P^{\mathsf T}=P^2$ y
+$\ker P=V^{\perp}$. Sea $\Delta=\{\,b\in\R^r:\ b_i\ge 0,\ \sum_i b_i=1\,\}$ el
+símplex estándar y definamos
+\[
+  A \;=\; P(\Delta) \;=\; \Bigl\{\ \sum_{i=1}^{r} b_i\,Pe_i \ :\ b_i\ge 0,\ \sum_i b_i=1 \ \Bigr\}
+  \;\subseteq\; V .
+\]
+Por ser imagen del conjunto compacto y convexo $\Delta$ por una aplicación lineal,
+$A$ es compacto y convexo. Además
+\[
+  0\notin A,
+\]
+porque $Pb=0$ para algún $b\in\Delta$ significaría $b\in V^{\perp}$ con $b\ge 0$ y
+$b\neq 0$, contradiciendo \eqref{eq:hyp}.
+
+Por compacidad, la función continua $u\mapsto\|u\|$ alcanza un mínimo sobre $A$,
+digamos en $v\in A$; y $v\neq 0$. Afirmamos que
+\begin{equation}\label{eq:var}
+  \ip{v}{u}\ \ge\ \|v\|^{2}\qquad\text{para todo } u\in A .
+\end{equation}
+En efecto, fijemos $u\in A$. Por convexidad $v+t(u-v)\in A$ para todo $t\in(0,1]$, de
+modo que, por la minimalidad de $\|v\|$,
+\[
+  \|v\|^{2}\ \le\ \|v+t(u-v)\|^{2}
+  \ =\ \|v\|^{2}+2t\,\ip{v}{u-v}+t^{2}\|u-v\|^{2}.
+\]
+Cancelando $\|v\|^2$, dividiendo por $t>0$ y haciendo $t\to 0^{+}$ se obtiene
+$\ip{v}{u-v}\ge 0$, que es \eqref{eq:var}.
+
+Apliquemos ahora \eqref{eq:var} al punto $u=Pe_i\in A$. Como $v\in V$ se tiene
+$Pv=v$, y como $P$ es autoadjunta,
+\[
+  \ip{v}{Pe_i}=\ip{Pv}{e_i}=\ip{v}{e_i}=v_i .
+\]
+Por lo tanto
+\[
+  v_i\ \ge\ \|v\|^{2}\ >\ 0\qquad\text{para todo } i=1,\dots,r,
+\]
+así que el vector $v\in V$ tiene \emph{todas} sus coordenadas estrictamente
+positivas. Eligiendo $c^{\ast}\in\R^n$ con $Mc^{\ast}=v$, esos montos (reales) ya
+garantizan una ganancia de al menos $\|v\|^2$ en cada resultado.
+
+\subsection*{Paso 2} 
+
+Consideremos
+\[
+  U=\{\,c\in\R^{n}\ :\ (Mc)_i>0 \text{ para todo } i=1,\dots,r\,\}.
+\]
+La aplicación $c\mapsto Mc$ es continua y el ortante positivo abierto de $\R^r$ es
+abierto, así que $U$ es abierto; por el Paso 1 es no vacío. Como $\Q^{n}$ es denso en
+$\R^{n}$, el abierto $U$ contiene un punto racional $q$. Sea $N$ un denominador común
+positivo de $q_1,\dots,q_n$ y pongamos $c=Nq$. Entonces $c\in\Z^{n}$ y
+\[
+  Mc = N\,(Mq),
+\]
+cuyas coordenadas son todas estrictamente positivas. Estos montos enteros ganan,
+pase lo que pase. 
+
+\end{document}

@@ -1,0 +1,125 @@
+\documentclass[11pt]{amsproc}
+
+\usepackage[a4paper,margin=2.6cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\gen}[1]{\langle #1\rangle}
+\newcommand{\col}{\operatorname{col}}
+
+\begin{document}
+
+\section*{Problema}
+
+Sea $V=\mathbb{R}^n$ y sea $ G$ una familia finita, con al menos dos
+elementos, de transformaciones lineales invertibles de $V$, cerrada bajo
+composición.
+Sean $v_1,\dots,v_n\in V$ vectores linealmente independientes. Para cada
+$i=1,\dots,n$, definimos
+\[
+    w_i=\frac1{| G|}\sum_{T\in G}T(v_i).
+\]
+Calcule el volumen del simplex con vértices
+$0,w_1,\dots,w_n$.
+
+\section*{Solución}
+Como $ G$ es finita, está formada por transformaciones invertibles y
+es cerrada bajo composición, $ G$ es un grupo.
+Sea
+\[
+    S=\sum_{T\in G}T.
+\]
+Para cualquier $U\in G$ tenemos
+\[
+    US=\sum_{T\in G}UT
+      =\sum_{T\in G}T
+      =S.
+\]
+
+Como $ G$ tiene al menos dos elementos, podemos elegir $U\in G$ distinto de la
+identidad. De $US=S$ se sigue que $(U-I)S=0$. Si $S$ es inversible, entonces
+$U=I$, una contradicción. Luego $S$ no es inversible y $\det S=0$.  Sea $A$ la
+matriz cuyas columnas son $v_1,\dots,v_n$. La matriz cuyas columnas son
+$w_1,\dots,w_n$ es
+\[
+    \frac1{| G|}SA.
+\]
+Entonces, 
+\[
+\det(w_1,\dots,w_n)
+    =\frac{1}{| G|^n}\det(S)\det(A)
+    =0.
+\]
+Por lo tanto, el simplex con vértices $0,w_1,\dots,w_n$ tiene volumen cero. 
+
+\section*{Problema (una variante del anterior)}
+Sea $ G$ una familia finita de $m$ transformaciones lineales
+invertibles de $\mathbb R^n$, cerrada bajo composición. Sean
+$v_1,\dots,v_n$ vectores linealmente independientes y, para cada $i$, defina
+\[
+    w_i=v_i+\sum_{T\in G}T(v_i).
+\]
+Demuestre que el cociente entre los volúmenes de los simplex
+\[
+    (0,w_1,\dots,w_n)
+    \qquad\text{y}\qquad
+    (0,v_1,\dots,v_n)
+\]
+es una potencia de $m+1$.
+
+\section*{Solución}
+
+Como $ G$ es finita, está formada por transformaciones invertibles y
+es cerrada bajo composición, $ G$ es un grupo.
+Consideremos el operador
+\[
+    S=\sum_{T\in G}T.
+\]
+Para todo $U\in G$ se tiene
+$US=S$, 
+pues la multiplicación por $U$ simplemente permuta los elementos de
+$ G$. En particular, la imagen de $S$ está contenida en el subespacio
+\[
+    W=\{v\in\mathbb R^n:T(v)=v\text{ para todo }T\in G\}.
+\]
+Por otra parte, si $v\in W$, entonces
+$S(v)=mv$. 
+Más aún,
+\[
+    S^2
+    =\sum_{T,U\in G}TU
+    =m\sum_{R\in G}R
+    =mS,
+\]
+pues cada elemento $R\in G$ aparece exactamente $m$ veces en la
+doble suma.
+Por lo tanto, el operador
+$P=\frac1mS$ 
+satisface $P^2=P$. Es decir, $P$ es una proyección, y su imagen es
+precisamente $W$.
+Sea $r=\dim W$. Los autovalores de $P$ son entonces
+\[
+    \underbrace{1,\dots,1}_{r\text{ veces}},
+    \underbrace{0,\dots,0}_{n-r\text{ veces}}.
+\]
+En consecuencia, los autovalores de
+$I+S=I+mP$ 
+son $m+1$, con multiplicidad $r$, y $1$, con multiplicidad $n-r$. Así,
+$\det(I+S)=(m+1)^r$. 
+Ahora bien,
+$w_i=(I+S)v_i$.
+Si $A$ es la matriz cuyas columnas son $v_1,\dots,v_n$, la matriz cuyas
+columnas son $w_1,\dots,w_n$ es
+$(I+S)A$.
+Por consiguiente,
+\[
+    \frac{\operatorname{Vol}(0,w_1,\dots,w_n)}
+         {\operatorname{Vol}(0,v_1,\dots,v_n)}
+    =
+    |\det(I+S)|
+    =(m+1)^r.
+\]
+
+\end{document}

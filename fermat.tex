@@ -1,0 +1,112 @@
+\documentclass[11pt]{amsproc}
+
+\usepackage[a4paper,margin=2.6cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[spanish]{babel}   
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\newtheorem*{theorem}{Teorema}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\begin{document}
+
+\section*{Problema}
+
+Una red consta de un número finito de puntos, unidos por flechas. Entre dos
+puntos puede haber varias flechas, y también puede haber flechas que comiencen
+y terminen en un mismo punto.
+Un viaje consiste en seguir sucesivamente algunas flechas. Sea $N_k$ el
+número de viajes de $k$ pasos cuyo punto final coincide con el inicial.
+Demuestre que, si $p$ es primo, entonces
+\[
+N_p\equiv N_1\bmod p.
+\]
+
+\section*{Primera solución}
+
+Consideremos el conjunto $X$ de los viajes cerrados de $p$ pasos. El grupo
+cíclico $C_p$ actúa sobre $X$ rotando los pasos del viaje: si
+$(e_1,e_2,\dots,e_p)$ 
+es un viaje cerrado, lo enviamos a
+$(e_2,e_3,\dots,e_p,e_1)$.
+Como $p$ es primo, toda órbita de esta acción tiene 1 o $p$ elementos.
+Por lo tanto,
+$|X|\equiv |X^{C_p}|\bmod p$, 
+donde $X^{C_p}$ denota el conjunto de viajes fijos por la rotación.
+
+Un viaje es fijo si y solo si sus $p$ pasos son una misma flecha repetida.
+Para que esto sea posible, esa flecha debe comenzar y terminar en el mismo
+punto. En consecuencia, los viajes fijos están en correspondencia con los
+viajes cerrados de un solo paso. Así,
+$|X^{C_p}|=N_1$. 
+Como $|X|=N_p$, obtenemos
+$N_p\equiv N_1\bmod p$.
+
+\section*{Otra solución, más algebraica}
+
+Sea $A=(a_{ij})$ la matriz de adyacencia de la red, donde $a_{ij}$ es el
+número de flechas que van del punto $i$ al punto $j$. Es bien conocido, y
+se comprueba por inducción, que la entrada $(i,j)$ de $A^k$ cuenta los
+viajes de $k$ pasos que comienzan en $i$ y terminan en $j$. Por lo tanto,
+\[
+N_k=\operatorname{tr}(A^k).
+\]
+
+Usaremos la siguiente versión matricial del pequeño teorema de Fermat.
+
+\begin{theorem}
+Sea $A$ una matriz cuadrada con coeficientes enteros y sea $p$ un número
+primo. Entonces
+\[
+\operatorname{tr}(A^p)\equiv
+\bigl(\operatorname{tr}A\bigr)^p\bmod p.
+\]
+\end{theorem}
+
+\begin{proof}
+Sean $\lambda_1,\dots,\lambda_n\in\mathbb C$ los autovalores de $A$,
+contados con multiplicidad. Como $A$ tiene coeficientes enteros, todos ellos
+son enteros algebraicos.
+Al desarrollar
+\[
+(\lambda_1+\cdots+\lambda_n)^p,
+\]
+todos los términos mixtos tienen coeficiente divisible por $p$. Por tanto
+existe un entero algebraico $\alpha$ tal que
+\[
+(\lambda_1+\cdots+\lambda_n)^p
+\lambda_1^p+\cdots+\lambda_n^p+p\alpha.
+\]
+Como 
+\[
+\lambda_1+\cdots+\lambda_n=\operatorname{tr}A,\quad 
+\lambda_1^p+\cdots+\lambda_n^p=\operatorname{tr}(A^p),
+\]
+tenemos 
+\[
+p\alpha=
+\bigl(\operatorname{tr}A\bigr)^p-\operatorname{tr}(A^p)\in\mathbb Z.
+\]
+En particular, $\alpha\in\mathbb Q$. Como $\alpha$ es además un entero
+algebraico, necesariamente $\alpha\in\mathbb Z$. Luego 
+\[
+\operatorname{tr}(A^p)\equiv
+\bigl(\operatorname{tr}A\bigr)^p\bmod p.\qedhere 
+\]
+\end{proof}
+
+Volvamos a la solución del problema. 
+Aplicando el teorema a la matriz de adyacencia, 
+\[
+N_p=\operatorname{tr}(A^p)
+\equiv \bigl(\operatorname{tr}A\bigr)^p
+=N_1^p\bmod p.
+\]
+Por el pequeño teorema de Fermat,
+$N_1^p\equiv N_1\bmod p$, y entonces 
+$N_p\equiv N_1\bmod p$. 
+
+\end{document}

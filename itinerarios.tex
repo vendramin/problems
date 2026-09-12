@@ -1,0 +1,81 @@
+\documentclass[11pt,a4paper]{amsproc}
+
+\usepackage[a4paper,margin=2.6cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}   
+\usepackage{amsmath,amssymb,amsthm}
+
+\newtheorem*{theorem}{Teorema}
+
+\newcommand{\C}{\mathbb{C}}
+
+\begin{document}
+
+\section*{Problema}
+
+Dos aerolíneas, \textbf{Roja} y \textbf{Azul}, operan vuelos de ida entre $d$ ciudades;
+cada una tiene su propio mapa de rutas (se permiten vuelos de una ciudad a sí misma).
+Un \emph{itinerario} es una sucesión de $N$ tramos, uno por día, donde cada tramo se vuela
+por una aerolínea determinada y por una ruta de esa aerolínea.
+
+Para cada día $i$ el ministerio fija un par de precios $(\alpha_i,\beta_i)\neq(0,0)$ de
+números complejos: $\alpha_i$ para un tramo Rojo de ese día y $\beta_i$ para un tramo Azul.
+El costo de un itinerario es el \textbf{producto} de los $N$ precios que paga.
+
+Probar que los precios se pueden fijar de antemano de modo que, para \textbf{todo} par
+ordenado de ciudades $(u,v)$, el costo total de todos los itinerarios de $N$ días que van
+de $u$ a $v$ sea exactamente cero. 
+
+\section*{Solución}
+
+La solución depende del siguiente resultado: 
+
+\begin{theorem}
+  Sean $A,B\in \C^{d\times d}$, $d\ge 1$. Entonces existen pares
+$(\alpha_i,\beta_i)\neq(0,0)$, $1\le i\le N$, tales que
+\[
+  (\alpha_1A+\beta_1B)(\alpha_2A+\beta_2B)\cdots(\alpha_NA+\beta_NB)=0 .
+\]
+Más aún, se puede tomar $N\le 2^{d}-1$.
+\end{theorem}
+
+Sean $A,B\in\C^{d\times d}$ las matrices de adyacencia de Roja y Azul, es decir
+$A_{xy}=1$ si Roja vuela $x\to y$ y $A_{xy}=0$ si no, e igual para $B$ con Azul.
+El ``mapa tarifado'' del día $i$ es $C_i=\alpha_iA+\beta_iB$, cuya entrada $(x,y)$ es
+justamente el precio del tramo $x\to y$ ese día (sumado sobre las aerolíneas que lo vuelan).
+Multiplicando,
+\[
+  (C_1C_2\cdots C_N)_{uv}
+  \;=\!\!\sum_{u=x_0\to x_1\to\cdots\to x_N=v}\ \prod_{i=1}^N (C_i)_{x_{i-1}x_i}
+  \;=\!\!\sum_{\text{itinerarios } u\to v}\!\!\text{costo},
+\]
+porque desarrollar el producto de las entradas equivale a elegir, para cada día, una ruta
+\emph{y} la aerolínea que la vuela. Por lo tanto la conclusión pedida es exactamente
+$C_1C_2\cdots C_N=0$, que es el Teorema aplicado a $A$ y $B$. \qedhere
+
+\section*{Observación}
+
+Ll problema es imposible con precios reales y resoluble con 
+precios complejos. El teorema usa fuertemente que
+uno está en los complejos. 
+
+Sea $d=2$, con Roja $=$ un bucle en cada ciudad más la ruta $1\to 2$, y Azul $=$ un bucle
+en cada ciudad más la ruta $2\to 1$:
+\[
+  A=\begin{pmatrix}1&1\\0&1\end{pmatrix},\qquad
+  B=\begin{pmatrix}1&0\\1&1\end{pmatrix},\qquad
+  \alpha A+\beta B=\begin{pmatrix}\alpha+\beta&\alpha\\ \beta&\alpha+\beta\end{pmatrix},
+\]
+\[
+  \det(\alpha A+\beta B)=(\alpha+\beta)^2-\alpha\beta=\alpha^2+\alpha\beta+\beta^2
+  =\Big(\alpha+\tfrac{\beta}{2}\Big)^{\!2}+\tfrac34\,\beta^2 .
+\]
+Con precios \emph{reales} esto es $>0$ para todo $(\alpha,\beta)\neq(0,0)$: la matriz de cada
+día es inversible, luego el producto también lo es, y los itinerarios nunca se cancelan,
+cualquiera sea $N$. En cambio, con $\omega=e^{2\pi i/3}$ (o sea $1+\omega+\omega^2=0$) la
+forma se anula y bastan tres días:
+\[
+  \bigl(\omega A+B\bigr)\bigl((3+\omega)A+(\omega-2)B\bigr)\bigl(\omega A+B\bigr)=0 .
+\]
+\end{document}
