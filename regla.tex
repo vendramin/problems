@@ -1,0 +1,63 @@
+\documentclass[11pt]{amsproc}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-noshorthands,es-nodecimaldot]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{enumitem}
+
+\begin{document}
+
+\section*{Problema} 
+
+Encuentre pares de números racionales
+$(a_0,b_0),(a_1,b_1),\dots$, en los que $a_i$ y $b_i$ nunca son ambos nulos,
+con la siguiente propiedad: para todo par racional $(\alpha,\beta)\neq(0,0)$
+existe un $N$ tal que cualesquiera $N$ pares consecutivos contienen un par
+$(a_j,b_j)$ con $\alpha a_j+\beta b_j=0$.
+
+\section*{Solución} 
+
+Para $(\alpha,\beta)\neq(0,0)$
+racional, sea
+\[
+  \ell(\alpha,\beta)=\{(a,b):\alpha a+\beta b=0\}.
+\]
+Hay una cantidad numerable de pares $(\alpha,\beta)$, por lo que hay una
+cantidad numerable de rectas, digamos 
+$\ell_1,\ell_2,\ell_3,\dots$. Las repeticiones no causan ningún problema. 
+
+Cada recta contiene un punto racional no nulo. Si
+$\ell_n=\ell(\alpha,\beta)$, tomamos $q_n=(\beta,-\alpha)$. Entonces
+$\alpha\beta+\beta(-\alpha)=0$, y $q_n\neq(0,0)$.
+
+Todo entero $m\geq1$ se escribe
+así: $m=2^v\cdot u$ con $u$ impar, $v=v_2(m)$.
+Definimos
+\[
+  (a_i,b_i)=q_{\,v_2(i+1)+1}\qquad(i\geq0).
+\]
+Así, $(a_i,b_i)$ está en $\ell_n$ exactamente cuando $v_2(i+1)=n-1$. Leyendo
+$n=v_2(i+1)+1$ para $i=0,1,2,\dots$ se obtiene la sucesión 
+\[
+  1,2,1,3,1,2,1,4,1,2,1,3,1,2,1,5,\dots
+\]
+Cada par es algún $q_n$, así que ningún par es $(0,0)$.
+
+Tomemos ahora $2^n$ índices consecutivos $i,i+1,\dots,i+2^n-1$. Los números
+$i+1,\dots,i+2^n$ son $2^n$ enteros consecutivos, de modo que recorren cada
+clase módulo $2^n$ exactamente una vez. En particular, uno de
+ellos, digamos $j+1$, satisface
+\[
+  j+1\equiv 2^{n-1}\bmod{2^n}, 
+\]
+es decir $j+1=2^{n-1}(1+2k)$ para algún $k\ge 0$, así que $v_2(j+1)=n-1$. Por
+lo tanto, $(a_j,b_j)=q_n\in\ell_n$.
+
+Ya casi estamos. Sea $(\alpha,\beta)\neq(0,0)$ racional.
+Su recta $\ell(\alpha,\beta)$ es $\ell_n$ para algún $n$. Tomemos $N=2^n$.
+Sabemos que $N$ pares consecutivos contienen un par con
+$\alpha a_j+\beta b_j=0$. 
+
+\end{document}
