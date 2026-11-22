@@ -1,0 +1,232 @@
+\documentclass[11pt]{amsproc}
+
+\usepackage[a4paper,margin=2.6cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\Id}{\operatorname{Id}}
+
+\begin{document}
+
+\section*{Problema}
+
+Para cada entero $n\ge 0$ sea $P_n$ el espacio vectorial de los polinomios
+homogéneos de grado $n$ en las variables $x,y,z$, con coeficientes complejos.
+El polinomio nulo pertenece a todos los $P_n$, y ponemos $P_n=\{0\}$ si $n<0$.
+Consideremos el operador
+\[
+  Df=\frac{\partial^3 f}{\partial x^3}+\frac{\partial^3 f}{\partial y^3}
+      +\frac{\partial^3 f}{\partial z^3},
+\]
+que lleva $P_n$ en $P_{n-3}$, el subespacio
+\[
+  V_n=\{f\in P_n : Df=0\}
+\]
+y la transformación lineal $T\colon P_n\to P_n$ dada por $(Tf)(x,y,z)=f(y,z,x)$.
+
+\begin{enumerate}
+  \item\itshape Probar que $D(P_n)=P_{n-3}$ para todo $n\ge 3$. Es decir, que
+        todo polinomio homogéneo de grado $n-3$ es de la forma
+        $g_{xxx}+g_{yyy}+g_{zzz}$ con $g\in P_n$.
+  \item\itshape Probar que $T(V_n)\subseteq V_n$ y calcular, para cada $n\ge 0$,
+        el polinomio característico de la restricción de $T$ a $V_n$.
+\end{enumerate}
+
+Dicho de otro modo, en (2) se pide, para cada $\lambda\in\C$ con $\lambda^3=1$,
+la dimensión del espacio de soluciones $f\in P_n$ de la ecuación
+$f_{xxx}+f_{yyy}+f_{zzz}=0$ que cumplen $f(y,z,x)=\lambda f(x,y,z)$.
+
+\section*{Solución}
+
+\subsection*{Parte (1)}
+
+Fijemos $n\ge 3$. Todo $h\in P_{n-3}$ se escribe de manera única como
+\[
+  h=\sum_{k=0}^{n-3}x^{n-3-k}h_k(y,z),
+\]
+con $h_k$ homogéneo de grado $k$ en $y,z$. Llamemos $\kappa(h)$ al mayor $k$
+con $h_k\ne 0$ y pongamos $\kappa(0)=-1$. Probemos, por inducción en
+$\kappa(h)$, que $h\in D(P_n)$.
+
+Para $\kappa(h)=-1$ tenemos $h=0=D(0)$. Supongamos ahora que $K=\kappa(h)\ge 0$
+y que el resultado vale para los polinomios de $P_{n-3}$ con $\kappa<K$.
+Integremos tres veces respecto de $x$ el término de mayor grado en $y,z$. Como
+$K\le n-3$, el número $c=(n-K)(n-K-1)(n-K-2)$ no es nulo. Tomemos
+\[
+  g=\frac{1}{c}\,x^{n-K}h_K(y,z)\in P_n .
+\]
+Al derivar tres veces respecto de $x$ recuperamos el término que elegimos.
+Las derivadas respecto de $y$ y de $z$ bajan en tres el grado en esas variables.
+Así,
+\[
+  Dg=x^{n-3-K}h_K+\frac{1}{c}\,x^{n-K}
+        \bigl(\partial_y^3h_K+\partial_z^3h_K\bigr).
+\]
+El segundo sumando es nulo o tiene grado $K-3$ en $y,z$. Luego
+$\kappa(h-Dg)<K$ y, por la hipótesis inductiva, $h-Dg=Dg'$ para cierto
+$g'\in P_n$. De aquí $h=D(g+g')$, como queríamos.
+
+Como $\dim P_n=\binom{n+2}{2}$ para $n\ge 0$, el teorema de la dimensión da
+\[
+  \dim V_n=\dim P_n-\dim P_{n-3}
+          =\binom{n+2}{2}-\binom{n-1}{2}=3n\qquad (n\ge 3).
+\]
+Para $n=0,1,2$ se tiene $V_n=P_n$, de dimensiones $1,3,6$, respectivamente.
+En particular, $\dim V_n=3n$ para todo $n\ge 1$.
+
+\subsection*{Parte (2), paso 1}
+
+En $Tf$ la variable $x$ ocupa el tercer lugar de $f$, la $y$ el primero y
+la $z$ el segundo. Por la regla de la cadena,
+\[
+  \partial_x(Tf)=T(\partial_z f),\qquad
+  \partial_y(Tf)=T(\partial_x f),\qquad
+  \partial_z(Tf)=T(\partial_y f).
+\]
+Aplicando estas igualdades tres veces y sumando, obtenemos $D(Tf)=T(Df)$.
+En particular, si $Df=0$ entonces $D(Tf)=0$, de modo que $T(V_n)\subseteq V_n$.
+Notemos también que $T^3=\Id$.
+
+\subsection*{Parte (2), paso 2}
+
+Calculemos la traza de $T$ en $V_n$. Probemos primero que
+\begin{equation}\label{eq:traza}
+  \tr(T|_{V_n})=\tr(T|_{P_n})-\tr(T|_{P_{n-3}}).
+\end{equation}
+Para $0\le n\le 2$ esto se sigue de que $V_n=P_n$ y $P_{n-3}=\{0\}$.
+Para $n\ge 3$, tomemos una base de $V_n$ y completémosla con $g_1,\dots,g_r$
+a una base de $P_n$. Los vectores $Dg_1,\dots,Dg_r$ generan $P_{n-3}$ por
+la parte (1), y forman una base porque $r=\dim P_n-\dim V_n=\dim P_{n-3}$.
+
+Escribamos $Tg_k=v_k+\sum_l\beta_{lk}g_l$, con $v_k\in V_n$. Aplicando $D$
+y usando el paso 1, obtenemos
+\[
+  T(Dg_k)=D(Tg_k)=\sum_l\beta_{lk}\,Dg_l.
+\]
+Así, en la base elegida de $P_n$ la matriz de $T$ es triangular por bloques.
+Sus bloques diagonales son la matriz de $T|_{V_n}$ y la matriz
+$(\beta_{lk})$ de $T|_{P_{n-3}}$ en la base $(Dg_l)$. Tomando trazas se
+obtiene \eqref{eq:traza}.
+
+Ahora bien, $T$ lleva el monomio $x^ay^bz^c$ en $x^cy^az^b$, de modo que su
+traza en $P_n$ es la cantidad de monomios fijos. Un monomio es fijo si y sólo
+si $a=b=c$. Para $n\ge 3$, multiplicar por $xyz$ da una biyección entre los
+monomios fijos de grado $n-3$ y los de grado $n$. Para $n=1,2$ tampoco hay
+monomios fijos y $P_{n-3}=\{0\}$. Por \eqref{eq:traza} resulta entonces
+\[
+  \tr(T|_{V_n})=0\qquad(n\ge 1).
+\]
+
+\subsection*{Parte (2), paso 3}
+
+Sea $\omega=e^{2\pi i/3}$. Como $T^3=\Id$ y el polinomio
+$t^3-1=(t-1)(t-\omega)(t-\omega^2)$ tiene raíces simples, $T|_{V_n}$ es
+diagonalizable. Fijemos $n\ge 1$ y llamemos $m_0,m_1,m_2$ a las
+multiplicidades de $1,\omega,\omega^2$. Usando que $1+\omega+\omega^2=0$,
+la igualdad del paso anterior se escribe
+\[
+  0=m_0+\omega m_1+\omega^2m_2=(m_0-m_2)+(m_1-m_2)\omega.
+\]
+Como los $m_i$ son enteros y $\omega$ no es real, la parte imaginaria da
+$m_1=m_2$ y luego $m_0=m_2$. Su suma es $\dim V_n=3n$, así que cada uno
+vale $n$. Para $n=0$, $V_0$ es el espacio de las constantes y $T=\Id$.
+En conclusión,
+\[
+  \chi_{T|_{V_n}}(t)=
+  \begin{cases}
+    t-1,       & n=0,\\
+    (t^3-1)^n, & n\ge 1.
+  \end{cases}
+\]
+
+\section*{Observaciones}
+
+\begin{enumerate}
+  \item La primera parte sirve de pista. La sobreyectividad dice que el
+    núcleo tiene la menor dimensión posible y sugiere comparar $P_n$ con
+    $P_{n-3}$. Para la versión difícil basta con pedir el segundo inciso.
+    Si se quiere dar una pista para el primero, se puede preguntar qué pasa
+    con el grado en $y,z$ al integrar tres veces respecto de $x$ el término
+    de mayor grado en $y,z$ y aplicar después el operador $D$.
+
+  \item Para $n\ge 3$, $V_n$ no tiene una base de monomios. Por ejemplo,
+    $(x-y)^n$ pertenece a $V_n$ porque sus dos terceras derivadas en $x$ y
+    en $y$ se cancelan, mientras que $x^n$, que aparece en su desarrollo,
+    no pertenece a $V_n$. En cambio, en $P_n$ las trazas de las potencias de
+    $T$ se leen directamente en la base de monomios. De hecho, para $r=0,1,2$,
+    \[
+      m_r=\frac{1}{3}\sum_{j=0}^2\omega^{-rj}\tr(T^j|_{V_n}).
+    \]
+    Un autovalor $\omega^s$ aporta al miembro derecho
+    $\tfrac13\sum_{j=0}^2\omega^{(s-r)j}$, que vale $1$ si $s=r$ y $0$ en
+    los demás casos. El grupo simétrico $S_3$ actúa en $V_n$ permutando las
+    variables. La fórmula da el producto escalar del carácter de esta
+    representación, restringido al grupo cíclico generado por la permutación
+    $(x,y,z)\mapsto(y,z,x)$, con el carácter que le asigna $\omega^r$ a ese
+    ciclo. Es la misma cuenta que hace la función
+    \textsf{EigenvaluesChar} de \textsf{GAP}.
+
+  \item Hay otra manera de terminar el segundo inciso. Sea $W_n$ el subespacio
+    generado por los monomios de grado $n$ a los que les falta alguna variable.
+    Éstos son precisamente los monomios que resuelven $f_{xyz}=0$, y tenemos
+    \[
+      P_n=xyz\,P_{n-3}\oplus W_n .
+    \]
+    Ambos sumandos son estables por $T$, y multiplicar por $xyz$ conmuta con
+    $T$. Por lo tanto, el polinomio característico de $T$ en $P_n$ es el
+    producto de los correspondientes a $P_{n-3}$ y a $W_n$. Por la matriz
+    triangular por bloques del paso 2, ese mismo polinomio es el producto de
+    los correspondientes a $P_{n-3}$ y a $V_n$. Cancelando el factor común,
+    resulta $\chi_{T|_{V_n}}=\chi_{T|_{W_n}}$.
+
+    Para $n\ge 1$, los monomios de $W_n$ forman ciclos de longitud tres bajo
+    $T$. Hay exactamente $n$ ciclos, representados por $x^ay^{n-a}$ con
+    $1\le a\le n$. En efecto, en cada ciclo de monomios con dos variables
+    hay uno solo al que le falta $z$, y el ciclo de las potencias puras está
+    representado por $x^n$. Cada ciclo aporta un factor $t^3-1$.
+
+  \item La misma respuesta vale para $D=q(\partial_x,\partial_y,\partial_z)$
+    con $q$ cualquier polinomio homogéneo cúbico no nulo que cumpla
+    $q(x,y,z)=q(y,z,x)$. La regla de la cadena da de nuevo $DT=TD$. Para
+    ver la sobreyectividad, tomemos en cada $P_n$ el producto interno para
+    el cual los monomios son ortogonales y
+    $\langle x^ay^bz^c,x^ay^bz^c\rangle=a!\,b!\,c!$. Respecto de este
+    producto, $\partial_x$ es la adjunta de la multiplicación por $x$, y lo
+    mismo vale para $y,z$. Así, $q(\partial)$ es la adjunta de la
+    multiplicación por $\bar q$, donde se conjugan los coeficientes. Como
+    $\bar q\ne 0$, esa multiplicación es inyectiva de $P_{n-3}$ en $P_n$.
+    Su adjunta es entonces suryectiva y el resto de la solución vale sin cambios.
+
+  \item Con la ecuación de Laplace $f_{xx}+f_{yy}+f_{zz}=0$ se obtiene el
+    espacio de polinomios armónicos homogéneos de grado $n$. La permutación
+    cíclica de las coordenadas es una rotación de ángulo $2\pi/3$ alrededor
+    del eje $(1,1,1)$. Toda forma cuadrática no nula invariante por $T$ es
+    combinación de $x^2+y^2+z^2$ y $(x+y+z)^2$, de modo que también es
+    invariante por todas las rotaciones de ese eje. En el caso cúbico esto
+    ya falla para $x^3+y^3+z^3$. Sobre el plano $x+y+z=0$ coincide con
+    $3xyz$, que cambia de signo al girar media vuelta alrededor del eje.
+
+    También se puede calcular la respuesta cuadrática con el argumento
+    anterior. Para cualquier forma cuadrática $q$ como la de arriba,
+    $q(\partial)$ es suryectiva por el mismo argumento de adjuntas. Con la
+    notación $\chi_m=\chi_{T|_{P_m}}$, el polinomio buscado es
+    $\chi_n/\chi_{n-2}$. Para calcularlo, tomemos las coordenadas lineales
+    $u=x+y+z$, $v=x+\omega^2y+\omega z$ y $w=x+\omega y+\omega^2z$. Sus
+    autovalores son $1,\omega,\omega^2$, respectivamente, así que $vw$ es
+    fijo por $T$. Como en el caso de $xyz$, basta considerar los monomios a
+    los que les falta $v$ o $w$. Son $u^n$ y los pares
+    $u^{n-j}v^j,u^{n-j}w^j$ con $1\le j\le n$. Sus autovalores son $1$ y
+    los pares $\omega^j,\omega^{-j}$. Cada múltiplo de $3$ aporta dos unos,
+    y cada uno de los demás índices aporta un $\omega$ y un $\omega^2$.
+    Resulta así el polinomio
+    \[
+      (t-1)^{2\lfloor n/3\rfloor+1}
+      (t^2+t+1)^{n-\lfloor n/3\rfloor}.
+    \]
+\end{enumerate}
+
+\end{document}
+
