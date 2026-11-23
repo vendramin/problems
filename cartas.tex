@@ -11,32 +11,30 @@
 
 \section*{Problema}
 
-Sean $n$ y $m$ enteros positivos coprimos. Colocamos $n$ cartas en un círculo,
-una en cada una de las posiciones $0,1,\dots,n-1$, numeradas en sentido horario.
-Un \emph{movimiento} es una permutación de las posiciones. Para $0\le k<n$,
-llamamos $a_k$ a la cantidad de movimientos que, aplicados $m$ veces seguidas,
-hacen avanzar a cada carta $k$ lugares en sentido horario.
+Sean $n$ y $m$ enteros positivos coprimos. Ponemos $n$ cartas en círculo,
+una en cada una de las posiciones $0,1,\dots,n-1$, numeradas en sentido
+horario. Un \emph{movimiento} es una permutación de las posiciones. Para cada
+$k$ con $0\le k<n$, sea $a_k$ la cantidad de movimientos que, aplicados $m$
+veces seguidas, corren cada carta $k$ lugares en sentido horario.
 
-Fijemos un número complejo $\omega$ tal que $\omega^n=1$.
+Sea $\omega$ un número complejo tal que $\omega^n=1$.
 
 \begin{enumerate}
-  \item\itshape Sea $T$ una permutación de un conjunto finito tal que $T^n=\id$.
-        Para $0\le k<n$, sea $b_k$ la cantidad de elementos que quedan fijos
-        por $T^k$, con la convención $T^0=\id$. Probar que
+  \item\itshape Sea $T$ una permutación de un conjunto finito, con $T^n=\id$.
+        Para cada $k$ con $0\le k<n$, sea $b_k$ la cantidad de elementos que
+        $T^k$ deja fijos (acá $T^0=\id$). Probar que
         $\sum_{k=0}^{n-1}b_k\omega^k$ es un múltiplo no negativo de $n$.
-  \item\itshape Probar que la suma $\sum_{k=0}^{n-1}a_k\omega^k$ también es
-        un múltiplo no negativo de $n$.
+  \item\itshape Probar que $\sum_{k=0}^{n-1}a_k\omega^k$ también es un
+        múltiplo no negativo de $n$.
 \end{enumerate}
 
 \section*{Solución}
 
-\subsection*{Parte (1)}
-
-Descompongamos $T$ en ciclos y fijémonos en uno de longitud $d$. Al aplicar
-$T$ se avanza un lugar en el ciclo, de modo que se vuelve al punto de partida
-al cabo de $k$ pasos exactamente cuando $d\mid k$. En particular, $d\mid n$,
-pues $T^n=\id$. Así, este ciclo aporta $d$ a $b_k$ si $d\mid k$, y $0$ en
-los demás casos. Su aporte a la suma es entonces
+Hacemos primero (1), que sirve como hint. 
+Miremos un ciclo de $T$ de longitud $d$. Aplicar $T$ es avanzar un lugar en el
+ciclo, así que volvemos al punto de partida después de $k$ pasos justo cuando
+$d\mid k$. Como $T^n=\id$, en particular $d\mid n$. Entonces el ciclo aporta
+$d$ elementos a $b_k$ si $d\mid k$, y ninguno si no. Su aporte a la suma es
 \[
   d\sum_{j=0}^{n/d-1}(\omega^d)^j
   =
@@ -45,53 +43,48 @@ los demás casos. Su aporte a la suma es entonces
     0 & \text{si } \omega^d\ne 1.
   \end{cases}
 \]
-En el primer caso hay $n/d$ sumandos iguales a $1$. En el segundo, la suma
-geométrica se anula porque $(\omega^d)^{n/d}=\omega^n=1$. Sumando los aportes
-de todos los ciclos obtenemos lo pedido.
+Si $\omega^d=1$, hay $n/d$ sumandos y todos valen $1$. Si no, es una suma
+geométrica que se anula, porque $(\omega^d)^{n/d}=\omega^n=1$.
 
-\subsection*{Parte (2)}
+Sumamos los aportes de todos los ciclos y listo: la suma es $n$ por la
+cantidad de ciclos de $T$ cuya longitud $d$ cumple $\omega^d=1$.
 
-Sea $R$ la rotación que hace avanzar cada carta un lugar en sentido horario.
-Fijemos $k$. Un movimiento $\pi$ se cuenta en $a_k$ si y sólo si $\pi^m=R^k$.
-Busquemos una rotación que, aplicada $m$ veces, produzca ese mismo desplazamiento.
-Como $m$ y $n$ son coprimos, podemos elegir un entero positivo $u$ tal que
-$mu\equiv 1\pmod n$. Tomemos $B=(R^k)^u$. Como $R^n=\id$, tenemos $B^m=R^k$.
+Ahora resolvemos (2). 
+Sea $R$ la rotación que corre cada carta un lugar en sentido horario. Fijemos
+$k$. Un movimiento $\pi$ cuenta para $a_k$ si y solo si $\pi^m=R^k$.
 
-Si $\pi^m=R^k$, entonces $\pi$ conmuta con su propia potencia $R^k$ y por lo
-tanto también con $B$. Pongamos $\tau=B^{-1}\pi$. Así, $\tau$ conmuta con
-$R^k$ y $\tau^m=B^{-m}\pi^m=\id$. Recíprocamente, si $\tau^m=\id$ y $\tau$
-conmuta con $R^k$, también conmuta con $B$, de modo que $(B\tau)^m=R^k$.
-Las dos construcciones son inversas, pues $\pi=B\tau$. En consecuencia, $a_k$
-cuenta las permutaciones $\tau$ con $\tau^m=\id$ que conmutan con $R^k$.
+Primero buscamos una rotación que, aplicada $m$ veces, haga lo mismo que
+$R^k$. Como $m$ y $n$ son coprimos, hay un entero positivo $u$ tal que
+$mu\equiv 1\pmod n$. Tomamos $B=(R^k)^u$. Como $R^n=\id$, vale que
+$B^m=R^k$.
 
-Ahora tomemos como conjunto el de todas las permutaciones $\tau$ con
-$\tau^m=\id$. Definimos $T$ sumando uno, módulo $n$, a las etiquetas de las
-posiciones. Es decir, si $\tau$ lleva $i$ a $j$, entonces $T(\tau)$ lleva
-$i+1$ a $j+1$. En símbolos, $T(\tau)=R\tau R^{-1}$. Este cambio de etiquetas
-conserva la condición $\tau^m=\id$ y al cabo de $n$ pasos recuperamos las
-etiquetas originales. Luego $T$ es una permutación del conjunto y $T^n=\id$.
-Además,
+Si $\pi^m=R^k$, por supuesto $\pi$ conmuta con $R^k$, que es una potencia de
+$\pi$. Y como $B$ es una potencia de $R^k$, $\pi$ también conmuta con $B$. Sea
+$\tau=B^{-1}\pi$. Entonces $\tau$ conmuta con $R^k$ y
+$\tau^m=B^{-m}\pi^m=\id$. Al revés, si $\tau^m=\id$ y $\tau$ conmuta con
+$R^k$, también conmuta con $B$, y entonces $(B\tau)^m=B^m\tau^m=R^k$. Las dos
+construcciones son una la inversa de la otra, porque $\pi=B\tau$. Por eso,
+$a_k$ es la cantidad de permutaciones $\tau$ con $\tau^m=\id$ que conmutan con
+$R^k$.
+
+Falta elegir el conjunto y la permutación $T$. El conjunto es el de todas las
+permutaciones $\tau$ con $\tau^m=\id$. La permutación $T$ renumera las
+posiciones sumándoles uno, módulo $n$: si $\tau$ lleva $i$ a $j$, entonces
+$T(\tau)$ lleva $i+1$ a $j+1$. En fórmulas, $T(\tau)=R\tau R^{-1}$.
+Renumerar no cambia la condición $\tau^m=\id$, y después de $n$ pasos
+volvemos a la numeración original. Así que $T$ es una permutación del conjunto
+y $T^n=\id$. Además,
 \[
   T^k(\tau)=\tau
   \quad\Longleftrightarrow\quad R^k\tau R^{-k}=\tau
   \quad\Longleftrightarrow\quad R^k\tau=\tau R^k.
 \]
-Así, para esta elección de $T$ tenemos $b_k=a_k$ para todo $k$. Basta
-aplicar la primera parte.
+O sea, con este $T$ vale que $b_k=a_k$ para todo $k$. Alcanza con aplicar la
+primera parte.
 
-\section*{Observaciones}
+\section*{Observación}
 
-\begin{enumerate}
-  \item El primer inciso sirve de pista. Una vez resuelto, queda por descubrir
-        qué objetos conviene permutar para que $a_k$ cuente los que vuelven a
-        su lugar después de $k$ pasos. Para una versión más difícil se puede
-        pedir directamente la conclusión del segundo inciso.
-  \item Entre los movimientos $\tau$ con $\tau^m=\id$, consideremos equivalentes
-        dos que se obtienen uno del otro rotando las etiquetas. Si $\omega=1$,
-        el cociente de la suma por $n$ cuenta todas las clases de equivalencia.
-        Si $\omega$ es una raíz primitiva de orden $n$, sólo cuenta las clases
-        que contienen $n$ movimientos distintos.
-\end{enumerate}
+Para que el problema quede más difícil, se puede
+pedir directamente (2).
 
 \end{document}
-
