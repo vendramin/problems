@@ -1,0 +1,126 @@
+\documentclass[11pt]{amsproc}
+
+\usepackage[a4paper,margin=2.6cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\mcm}{\operatorname{mcm}}
+
+\begin{document}
+
+\section*{Problema}
+
+En una pizarra hay una tabla con dos filas y $n\ge 3$ columnas, numeradas
+del $1$ al $n$. En cada fila escribimos los números del $1$ al $n$, en algún
+orden.
+
+La fila de arriba no cambia nunca. En cada paso, debajo de cada número de la
+fila de arriba escribimos el número de la columna en la que ese número estaba
+en la fila de abajo antes del paso. Por ejemplo, si $n=3$, la fila de arriba
+es $2\,3\,1$ y la de abajo es $1\,3\,2$, después de un paso la fila de abajo
+es $3\,2\,1$: el $2$ estaba en la columna $3$, el $3$ en la columna $2$ y el
+$1$ en la columna~$1$.
+
+{\itshape Hallar el menor entero positivo $N$ tal que, para cualquier
+elección de las dos filas iniciales, después de $N$ pasos la fila de abajo
+vuelve a ser la del principio.}
+
+\section*{Solución}
+
+Pensemos cada fila como una permutación de $\{1,2,\dots,n\}$: $s(j)$ es el
+número que está en la columna $j$ de la fila de arriba, y $f(j)$ el de la
+fila de abajo. Escribimos $gh=g\circ h$, $g^{-1}$ para la inversa de $g$ e
+$\id$ para la identidad. El número $s(j)$ está en la columna $f^{-1}(s(j))$
+de la fila de abajo. Entonces un paso cambia $f$ por $f^{-1}s$.
+
+Vamos a ver que la respuesta es $N=2L$, donde $L=\mcm(1,2,\dots,n)$.
+
+\subsection*{Paso 1: dos pasos}
+
+Después de dos pasos, la fila de abajo es
+\[
+  (f^{-1}s)^{-1}s=s^{-1}fs .
+\]
+O sea, dos pasos conjugan $f$ por $s$. Como $s$ no cambia, después de $2k$
+pasos la fila de abajo es $s^{-k}fs^k$, y después de $2k+1$ pasos es
+\[
+  \bigl(s^{-k}fs^k\bigr)^{-1}s=s^{-k}f^{-1}s^{k+1}.
+\]
+
+\subsection*{Paso 2: las cantidades impares no sirven}
+
+Supongamos que las dos filas empiezan iguales, o sea, $f=s$. Después de
+$2k+1$ pasos, la fila de abajo es $s^{-k}s^{-1}s^{k+1}=\id$, es decir,
+$1\,2\,\dots\,n$. Para el primer paso esto se ve sin cuentas: si las dos
+filas son iguales, cada número queda en su propia columna. Si elegimos las dos filas iguales y
+distintas de $1\,2\,\dots\,n$, la fila de abajo no vuelve a la inicial
+después de una cantidad impar de pasos.
+
+\subsection*{Paso 3: las cantidades pares}
+
+Por el paso 1, después de $2k$ pasos la fila de abajo vuelve a ser la inicial
+para cualquier elección de las filas si y solo si $s^{-k}fs^k=f$, es decir,
+$s^kf=fs^k$, para todas las permutaciones $s$ y $f$. Si $s^k=\id$ para toda
+$s$, esto vale. Al revés, si vale, entonces cada $s^k$ conmuta con todas las
+permutaciones.
+
+Pero la única permutación que conmuta con todas es la identidad, y acá se usa
+que $n\ge 3$. Sea $\pi$ una permutación que conmuta con todas, y sea $i$ un
+elemento. Para cada $j\ne i$, sea $t$ la permutación que intercambia $i$ y
+$j$ y deja fijo todo lo demás. Como $\pi t=t\pi$, tenemos $\pi t\pi^{-1}=t$.
+Pero $\pi t\pi^{-1}$ intercambia $\pi(i)$ y $\pi(j)$ y deja fijo todo lo
+demás. Por eso $\{\pi(i),\pi(j)\}=\{i,j\}$, y en particular
+$\pi(i)\in\{i,j\}$. Como $n\ge 3$, hay dos elementos distintos $j$ y $j'$,
+ambos distintos de $i$, así que $\pi(i)\in\{i,j\}\cap\{i,j'\}=\{i\}$.
+Entonces $\pi=\id$.
+
+Así que $2k$ pasos sirven si y solo si $s^k=\id$ para toda permutación $s$.
+Si $s$ tiene un ciclo de longitud $\ell$, en ese ciclo $s^k$ avanza $k$
+lugares, y eso es la identidad justo cuando $\ell$ divide a $k$. Para cada
+$\ell\le n$ hay permutaciones con un ciclo de longitud $\ell$. Por eso
+$s^k=\id$ para toda $s$ si y solo si todos los números $1,2,\dots,n$ dividen
+a $k$, es decir, si y solo si $L$ divide a $k$.
+
+En resumen, los $N$ que sirven son los de la forma $2k$ con $k$ múltiplo de
+$L$, y el menor es $N=2L=2\mcm(1,2,\dots,n)$.
+
+\section*{Observaciones}
+
+\begin{enumerate}
+  \item Algunos valores: para $n=3,4,5,6,7$ la respuesta es $12$, $24$,
+        $120$, $120$ y $840$. Lo verificamos por computadora para
+        $3\le n\le 6$, simulando la pizarra con todas las filas iniciales
+        posibles.
+
+  \item Para $n=2$ la respuesta no es $2\mcm(1,2)=4$ sino $2$, porque ahí
+        todas las permutaciones conmutan y dos pasos siempre devuelven la
+        fila inicial. Por eso el enunciado pide $n\ge 3$.
+
+  \item Para una versión con pista, se puede pedir primero describir la fila
+        de abajo después de dos pasos. Ese es el paso 1, y con eso el resto
+        es bastante directo.
+
+  \item Es una versión del problema de la función
+        $F(\sigma,\tau)=(\tau,\tau^{-1}\sigma\tau)$ en pares de
+        permutaciones. Esa $F$ no cambia el producto $c=\sigma\tau$, y la
+        primera coordenada pasa de $\sigma$ a $\sigma^{-1}c$. Acá la fila de
+        arriba hace de $c$ y la de abajo hace de $\sigma$, así que $F^N$ es
+        la identidad si y solo si $N$ pasos devuelven siempre la fila de
+        abajo inicial. La pizarra se queda solamente con lo que importa: el
+        producto fijo y una coordenada.
+
+  \item El problema sale del teorema~3.13 de A.~Smoktunowicz y
+        L.~Vendramin, \emph{On skew braces}, arXiv:1705.06958. El teorema
+        dice que si $A$ es un skew brace finito con más de un elemento,
+        entonces la solución $r_A$ de la ecuación de Yang--Baxter asociada a
+        $A$ tiene orden $2d$, donde $d$ es el exponente del grupo aditivo
+        módulo su centro. La función $F$ de arriba es $r_A$ para el skew
+        brace trivial sobre el grupo simétrico, y para $n\ge 3$ el centro es
+        trivial, así que $d=\mcm(1,2,\dots,n)$. El paso 2 es el mismo
+        argumento del paper para descartar las potencias impares, y el
+        paso 1 corresponde a su lema~3.12.
+\end{enumerate}
+
+\end{document}
