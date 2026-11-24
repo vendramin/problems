@@ -1,0 +1,111 @@
+\documentclass[11pt]{amsproc}
+
+\usepackage[a4paper,margin=2.6cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\newcommand{\mcd}{\operatorname{mcd}}
+
+\begin{document}
+
+\section*{Problema}
+
+Sean $n,q\ge 2$ enteros coprimos. Multiplicar por $q$ permuta los restos
+módulo $n$. Esta permutación se descompone en ciclos disjuntos: hay $c$
+ciclos en total, y $f$ de ellos tienen longitud uno. Por ejemplo, para $n=12$
+y $q=5$ los ciclos son $\{0\}$, $\{1,5\}$, $\{2,10\}$, $\{3\}$, $\{4,8\}$,
+$\{6\}$, $\{7,11\}$ y $\{9\}$, así que $c=8$ y $f=4$.
+
+{\itshape Probar que $f^2$ divide a $nc$.}
+
+\section*{Solución}
+
+Trabajamos con los restos $0,1,\dots,n-1$ y todas las cuentas son módulo
+$n$. Sea $\Omega$ el conjunto de los ciclos de la multiplicación por $q$, que
+tiene $c$ elementos. La idea es sumar un punto fijo.
+
+\subsection*{Paso 1: los puntos fijos}
+
+Sean $g=\mcd(n,q-1)$ y $h=n/g$. Un resto $x$ es fijo si $qx\equiv x$, o sea,
+si $n$ divide a $(q-1)x$. Dividiendo por $g$, esto pasa si y solo si $h$
+divide a $\frac{q-1}{g}\,x$. Como $h$ y $\frac{q-1}{g}$ son coprimos, esto
+pasa si y solo si $h$ divide a $x$. Entre $0$ y $n-1$ hay exactamente $g$
+múltiplos de $h$: $0,h,2h,\dots,(g-1)h$. Entonces $f=g$. En particular, $f$
+divide a $q-1$ y a $n$, $n=fh$, y $h$ es un punto fijo: $qh\equiv h$.
+
+\subsection*{Paso 2: sumar $h$ permuta los ciclos}
+
+Sea $t$ la función que a cada resto $x$ le asigna $x+h$. Como $qh\equiv h$,
+\[
+  q(x+h)\equiv qx+qh\equiv qx+h,
+\]
+así que multiplicar por $q$ y sumar $h$ conmutan. Por eso
+\[
+  t\bigl(\{x,qx,q^2x,\dots\}\bigr)=\{x+h,\,q(x+h),\,q^2(x+h),\dots\},
+\]
+o sea, $t$ lleva el ciclo de $x$ en el ciclo de $x+h$. Sea $S\colon\Omega\to\Omega$ dada por $S(Y)=t(Y)$.
+Como $t$ es inyectiva, $S$ también lo es, y como $\Omega$ es finito, $S$ es
+una permutación de $\Omega$. Además, $S^j(Y)$ se obtiene sumándole $jh$ a
+cada elemento de $Y$.
+
+\subsection*{Paso 3: cuándo $S^j$ deja fijo un ciclo}
+
+Supongamos que $S^j(Y)=Y$ para algún $j\ge 1$ y tomemos $a\in Y$. Entonces
+$a+jh$ está en $Y$, que es el ciclo de $a$. Es decir, $a+jh\equiv q^ka$ para
+algún $k\ge 0$, y entonces
+\[
+  jh\equiv (q^k-1)\,a\pmod n.
+\]
+El número $q^k-1$ es múltiplo de $q-1$ y, por lo tanto, de $f$. Como $f$
+también divide a $n$, resulta que $f$ divide a $jh$.
+
+\subsection*{Paso 4: contar}
+
+Los ciclos de $S$ parten $\Omega$. Si un ciclo de $S$ tiene longitud $\ell$,
+entonces $S^\ell$ deja fijos sus elementos, y por el paso 3, $f$ divide a
+$\ell h$. Sumando sobre todos los ciclos de $S$, las longitudes $\ell$ suman
+$|\Omega|=c$, así que $f$ divide a $ch$. Multiplicando por $f$, resulta que
+$f^2$ divide a $fhc=nc$, y listo.
+
+\section*{Observaciones}
+
+\begin{enumerate}
+  \item Por el paso 1, $f=\mcd(n,q-1)$. Si escribimos $g=f$, $h=n/g$ y
+        $d=\mcd(g,h)$, entonces $f^2$ divide a $nc=ghc$ si y solo si $g$
+        divide a $hc$. Dividiendo por $d$, y como $g/d$ y $h/d$ son
+        coprimos, esto pasa si y solo si $g/d$ divide a $c$. O sea, el
+        enunciado es equivalente a que $g/\mcd(g,h)$ divida a $c$, que es la
+        forma en que aparece en las notas.
+        Esta versión es más limpia porque no hace falta definir $g$ ni $h$:
+        todo se lee en la permutación.
+
+  \item No se puede pedir que $f$ divida a $c$. Para $n=4$ y $q=3$ los
+        ciclos son $\{0\}$, $\{1,3\}$ y $\{2\}$, así que $c=3$ y $f=2$. Pero
+        $f^2=4$ divide a $nc=12$. Si $n$ es libre de cuadrados, entonces
+        $\mcd(f,n/f)=1$ y sí vale que $f$ divide a $c$.
+
+  \item Para una versión con pista, se puede pedir primero que se pruebe que
+        $f=\mcd(n,q-1)$ y que sumar un punto fijo manda ciclos en ciclos.
+        Con eso, lo que falta es contar.
+
+  \item El problema sale del teorema de Deaconescu y Walls: si un grupo $A$
+        actúa por automorfismos en un grupo finito $G$, y $C=C_G(A)$ y
+        $N=C\cap[A,G]$, entonces $(C:N)$ divide a la cantidad de $A$-órbitas
+        de $G$. Acá $G=\mathbb{Z}/n$ y $A$ es el grupo generado por la
+        multiplicación por $q$. Entonces $C$ es el conjunto de los puntos
+        fijos, que tiene $f$ elementos, $[A,G]=(q-1)\mathbb{Z}/n$ tiene $h$
+        elementos y $N$ tiene $\mcd(f,h)$ elementos. Por la observación~1, el enunciado es
+        justo que $(C:N)$ divide a $c$. La solución es la prueba de Isaacs en
+        este caso: sumar $h$ genera la acción de $C$ en los ciclos, y el
+        paso 3 dice que los estabilizadores están contenidos en $N$.
+
+  \item Si $q$ es potencia de un primo, los ciclos son las clases
+        ciclotómicas de $q$ módulo $n$. Entonces $c$ es la cantidad de
+        factores irreducibles de $x^n-1$ en $\mathbb{F}_q[x]$, y $f$ es la
+        cantidad de raíces de $x^n-1$ en $\mathbb{F}_q$. Pero el enunciado
+        vale para cualquier $q$ coprimo con $n$. Lo verificamos por
+        computadora para todos los pares coprimos con $2\le n,q<300$.
+\end{enumerate}
+
+\end{document}
