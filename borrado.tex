@@ -1,0 +1,166 @@
+\documentclass[11pt]{amsproc}
+
+\usepackage[a4paper,margin=2.6cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\begin{document}
+
+\section*{Problema}
+
+Un alfabeto tiene $n\ge 1$ letras. Una \emph{regla de borrado} le asigna a
+cada letra $x$ una permutación $\pi_x$ del alfabeto. Para borrar una $x$ de
+una palabra, sacamos esa $x$ y reemplazamos cada letra $y$ que queda por
+$\pi_x(y)$.
+
+La regla es \emph{admisible} si pasa lo siguiente: en cualquier palabra
+marcamos dos posiciones distintas, las borramos una después de la otra, y
+obtenemos la misma palabra en los dos órdenes posibles. En cada paso se borra
+la letra que ocupa la posición marcada en ese momento. Por ejemplo, si todas
+las $\pi_x$ son la misma permutación, la regla es admisible.
+
+Sea $S$ una permutación del alfabeto y sea $k\ge 1$ un entero coprimo con
+$n!$. Escribimos $S^k$ para $S$ aplicada $k$ veces.
+
+{\itshape Probar que hay tantas reglas admisibles en las que, al borrar una
+letra de $xx$, queda $S(x)$ para toda letra $x$, como reglas admisibles en
+las que queda $S^k(x)$ para toda letra $x$.}
+
+\section*{Solución}
+
+Si borramos cualquiera de las dos letras de $xx$, la otra se reemplaza por
+$\pi_x(x)$. Llamamos \emph{diagonal} de la regla a la función
+$x\mapsto\pi_x(x)$. Para cada permutación $T$ del alfabeto, sea $c(T)$ la
+cantidad de reglas admisibles con diagonal $T$. Hay que probar que
+$c(S^k)=c(S)$.
+
+\subsection*{Paso 1: renombrar las letras}
+
+Sean $\gamma$ una permutación del alfabeto y $\pi$ una regla admisible.
+Definimos una regla nueva $\rho$ por
+\[
+  \rho_x=\gamma^{-1}\circ\pi_{\gamma(x)}\circ\gamma .
+\]
+La idea es simple: $\rho$ es la regla $\pi$ con las letras renombradas por
+$\gamma$. Para una palabra $w$, sea $\gamma(w)$ la palabra que se obtiene
+aplicándole $\gamma$ a cada letra. Si en $w$ borramos con $\rho$ una letra
+$x$, cada letra $y$ que queda pasa a ser $\rho_x(y)$, y
+\[
+  \gamma\bigl(\rho_x(y)\bigr)=\pi_{\gamma(x)}\bigl(\gamma(y)\bigr).
+\]
+Eso es justo lo que pasa si en $\gamma(w)$ borramos con $\pi$ la letra
+$\gamma(x)$, que está en la misma posición. O sea, borrar con $\rho$ y
+después aplicar $\gamma$ da lo mismo que aplicar $\gamma$ y después borrar
+con $\pi$.
+
+Por eso $\rho$ es admisible. Marquemos dos posiciones de una palabra $w$ y
+borrémoslas con $\rho$, en los dos órdenes. Si a los dos resultados les
+aplicamos $\gamma$, obtenemos lo mismo que si borramos esas posiciones de
+$\gamma(w)$ con $\pi$, en los dos órdenes. Como $\pi$ es admisible, eso da
+la misma palabra. Y como $\gamma$ es inyectiva, los dos resultados con
+$\rho$ también son iguales.
+
+Además, $\rho_x(x)=\gamma^{-1}\bigl(\pi_{\gamma(x)}(\gamma(x))\bigr)$. Así
+que, si $\pi_x(x)=T(x)$ para toda $x$, entonces
+$\rho_x(x)=(\gamma^{-1}\circ T\circ\gamma)(x)$ para toda $x$.
+
+Renombrar con $\gamma^{-1}$ hace el camino de vuelta, porque
+$\gamma\circ\rho_{\gamma^{-1}(x)}\circ\gamma^{-1}=\pi_x$. Entonces renombrar
+con $\gamma$ es una biyección entre las reglas admisibles con diagonal $T$ y
+las reglas admisibles con diagonal $\gamma^{-1}\circ T\circ\gamma$. O sea,
+\[
+  c(\gamma^{-1}\circ T\circ\gamma)=c(T)
+\]
+para todas las permutaciones $T$ y $\gamma$.
+
+\subsection*{Paso 2: de $S^k$ a $S$}
+
+Por el paso 1, aplicado a $T=S^k$, alcanza con encontrar una permutación
+$\gamma$ tal que $S=\gamma^{-1}\circ S^k\circ\gamma$, es decir,
+$S^k\circ\gamma=\gamma\circ S$. La construimos ciclo por ciclo.
+
+El alfabeto se parte en ciclos de $S$. Tomemos uno, de longitud $\ell$: son
+letras distintas $a_0,a_1,\dots,a_{\ell-1}$ con $S(a_i)=a_{i+1}$, donde
+leemos los subíndices módulo $\ell$. Entonces $S^k(a_i)=a_{i+k}$. Como
+$\ell\le n$, todo primo que divide a $\ell$ divide también a $n!$, así que
+$k$ y $\ell$ son coprimos. Por eso, si $ik\equiv jk\pmod\ell$, entonces
+$\ell$ divide a $(i-j)k$ y, por lo tanto, a $i-j$. O sea, multiplicar por
+$k$ permuta los restos módulo $\ell$.
+
+Definimos $\gamma(a_i)=a_{ik}$ en este ciclo. Por lo anterior, $\gamma$ es
+una biyección del ciclo en sí mismo, y
+\[
+  S^k\bigl(\gamma(a_i)\bigr)=S^k(a_{ik})=a_{ik+k}=a_{(i+1)k}
+  =\gamma(a_{i+1})=\gamma\bigl(S(a_i)\bigr).
+\]
+Haciendo lo mismo en cada ciclo de $S$, obtenemos una permutación $\gamma$
+del alfabeto con $S^k\circ\gamma=\gamma\circ S$. Entonces, por el paso 1,
+\[
+  c(S)=c(\gamma^{-1}\circ S^k\circ\gamma)=c(S^k),
+\]
+y listo.
+
+\section*{Observaciones}
+
+\begin{enumerate}
+  \item La condición de ser admisible se puede escribir con una fórmula.
+        En la palabra $xyz$, marquemos las posiciones de la $x$ y de la $y$.
+        Si borramos primero la $x$ y después la letra que quedó en el lugar
+        de la $y$, la $z$ pasa a ser $\pi_{\pi_x(y)}(\pi_x(z))$. En el otro
+        orden pasa a ser $\pi_{\pi_y(x)}(\pi_y(z))$. En una palabra
+        cualquiera, cada letra no marcada cambia de la misma manera. Por eso
+        la regla es admisible si y solo si
+        \[
+          \pi_{\pi_x(y)}\bigl(\pi_x(z)\bigr)=\pi_{\pi_y(x)}\bigl(\pi_y(z)\bigr)
+        \]
+        para todas las letras $x,y,z$. Si escribimos $x\cdot y=\pi_x(y)$,
+        esta es la identidad $(x\cdot y)\cdot(x\cdot z)=(y\cdot x)\cdot(y\cdot
+        z)$ de los \emph{ciclo-conjuntos} de Rump, que corresponden a las
+        soluciones involutivas de la ecuación de Yang--Baxter. La solución no
+        usa esta fórmula: alcanza con renombrar las letras.
+
+  \item Para una versión más fácil, se puede dar el paso 1 como primer
+        inciso: probar que la cantidad no cambia si se reemplaza $S$ por
+        $\gamma^{-1}\circ S\circ\gamma$. Otra opción es pedir solamente el
+        caso de $S^{-1}$. Es el caso $k=n!-1$, porque todas las longitudes de
+        los ciclos de $S$ dividen a $n!$ y entonces $S^{n!}$ es la
+        identidad.
+
+  \item De la condición de ser admisible solamente se usa que no cambia al
+        renombrar las letras. Pero sin esa condición el problema es trivial,
+        porque hay $\bigl((n-1)!\bigr)^n$ reglas con diagonal $T$, para
+        cualquier $T$. Con la condición, $c(T)$ depende de verdad de $T$.
+        Estos son los valores para $n=3$ y $n=4$, según las longitudes de los
+        ciclos de $T$:
+        \begin{center}
+        \begin{tabular}{cc@{\qquad\qquad}cc}
+          \multicolumn{2}{c}{$n=3$} & \multicolumn{2}{c}{$n=4$}\\[2pt]
+          ciclos de $T$ & $c(T)$ & ciclos de $T$ & $c(T)$\\\hline
+          $1,1,1$ & $4$ & $1,1,1,1$ & $30$\\
+          $2,1$   & $2$ & $2,1,1$   & $10$\\
+          $3$     & $1$ & $2,2$     & $10$\\
+                  &     & $3,1$     & $3$\\
+                  &     & $4$       & $4$
+        \end{tabular}
+        \end{center}
+        En total hay $12$ reglas admisibles con tres letras y $168$ con
+        cuatro. Lo verificamos por computadora, borrando letras en palabras.
+
+  \item El problema sale del lema~2.5 de Ö.~Akgün, M.~Mereb y L.~Vendramin,
+        \emph{Enumeration of set-theoretic solutions to the Yang--Baxter
+        equation}, arXiv:2008.04483. El lema dice que si una biyección $T_1$
+        es conjugada de la diagonal $T$, entonces hay un ciclo-conjunto
+        isomorfo con diagonal $T_1$. La prueba es la del paso 1. En el paper
+        se usa para fijar la diagonal en un representante de cada clase de
+        conjugación, y así la búsqueda se parte en $p(n)$ casos, uno por cada
+        partición de $n$.
+
+  \item Rump probó que en un ciclo-conjunto finito la diagonal siempre es
+        biyectiva. O sea, para una regla admisible, la función que a cada
+        $x$ le asigna la letra que queda al borrar una letra de $xx$ siempre
+        es una permutación. Por eso el enunciado habla solamente de
+        permutaciones $S$. Probarlo es más difícil y acá no hace falta.
+\end{enumerate}
+
+\end{document}
